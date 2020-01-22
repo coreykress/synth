@@ -64,7 +64,8 @@ class Keyboard extends Component {
       attack: this.props.synthOptions.envelope.attack,
       sustain: this.props.synthOptions.envelope.sustain,
       decay: this.props.synthOptions.envelope.decay,
-      release: this.props.synthOptions.envelope.release
+      release: this.props.synthOptions.envelope.release,
+      waveType: this.props.synthOptions.oscillator.type
     };
 
     this.setOctaves = this.setOctaves.bind(this);
@@ -77,6 +78,9 @@ class Keyboard extends Component {
 
   generateSynthOptions() {
     return {
+      oscillator: {
+        type: this.state.waveType
+      },
       envelope: {
         attack: this.state.attack,
         decay: this.state.decay,
@@ -122,12 +126,22 @@ class Keyboard extends Component {
 
   setRelease(value) {
     this.setState({release: parseFloat(value.target.value)}, () => {
-    this.updateSynth();
+      this.updateSynth();
     });
   }
 
   getRelease() {
     return this.state.release;
+  }
+
+  setWaveType(event) {
+    this.setState({waveType: event.target.value}, () => {
+      this.updateSynth();
+    });
+  }
+
+  getWaveType() {
+    return this.state.waveType;
   }
 
   octaveUp () {
@@ -196,26 +210,37 @@ class Keyboard extends Component {
             </div>
           </div>
 
-          <div id="asdrContainer">
-            <div>ATTACK</div>
-            <div className="asdrSlider">
-              <input type="range" id="attack" className="slider" min=".01" max="2" value={this.getAttack()} onChange={(e) => {this.setAttack(e)}} step=".01" />
-              <input type="text" id="attackValue" value={this.getAttack()} readOnly/>
+          <div id="controlsContainer">
+            <div id="asdrContainer">
+              <div>ATTACK</div>
+              <div className="asdrSlider">
+                <input type="range" id="attack" className="slider" min=".01" max="2" value={this.getAttack()} onChange={(e) => {this.setAttack(e)}} step=".01" />
+                <input type="text" id="attackValue" value={this.getAttack()} readOnly/>
+              </div>
+              <div>SUSTAIN</div>
+              <div className="asdrSlider">
+                <input type="range" id="sustain" className="slider" min=".01" max="2" value={this.getSustain()} onChange={(e) => {this.setSustain(e)}} step=".01" />
+                <input type="text" id="sustainValue" value={this.getSustain()} readOnly/>
+              </div>
+              <div>DECAY</div>
+              <div className="asdrSlider">
+                <input type="range" id="decay" className="slider" min=".01" max="2" value={this.getDecay()} onChange={(e) => {this.setDecay(e)}} step=".01" />
+                <input type="text" id="decayValue" value={this.getDecay()} readOnly/>
+              </div>
+              <div>RELEASE</div>
+              <div className="asdrSlider">
+                <input type="range" id="release" className="slider" min=".01" max="4" value={this.getRelease()} onChange={(e) => {this.setRelease(e)}} step=".01" />
+                <input type="text" id="releaseValue" value={this.getRelease()} readOnly/>
+              </div>
             </div>
-            <div>SUSTAIN</div>
-            <div className="asdrSlider">
-              <input type="range" id="sustain" className="slider" min=".01" max="2" value={this.getSustain()} onChange={(e) => {this.setSustain(e)}} step=".01" />
-              <input type="text" id="sustainValue" value={this.getSustain()} readOnly/>
-            </div>
-            <div>DECAY</div>
-            <div className="asdrSlider">
-              <input type="range" id="decay" className="slider" min=".01" max="2" value={this.getDecay()} onChange={(e) => {this.setDecay(e)}} step=".01" />
-              <input type="text" id="decayValue" value={this.getDecay()} readOnly/>
-            </div>
-            <div>RELEASE</div>
-            <div className="asdrSlider">
-              <input type="range" id="release" className="slider" min=".01" max="4" value={this.getRelease()} onChange={(e) => {this.setRelease(e)}} step=".01" />
-              <input type="text" id="releaseValue" value={this.getRelease()} readOnly/>
+
+            <div id="waveContainer">
+              <select value={this.getWaveType()} onChange={(e) => {this.setWaveType(e)}}>
+                <option value="sine" >Sine</option>
+                <option value="square" >Square</option>
+                <option value="sawtooth" >Sawtooth</option>
+                <option value="triangle" >Triangle</option>
+              </select>
             </div>
           </div>
         </div>

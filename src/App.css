@@ -43,10 +43,19 @@ body {
   width: 100%;
 }
 
+#controlsContainer {
+  display: flex;
+}
+
 #asdrContainer {
   display: flex;
+  flex:1;
   flex-direction: column;
   padding: 5px;
+}
+
+#waveContainer {
+  flex: 1;
 }
 
 .asdrSlider {
@@ -68,7 +77,6 @@ body {
   border: solid 1px #0086B3;
   border-radius: 5px;
   background-color: #fff;
-  flex: 1;
   width: 50px;
   height: 150px;
 }

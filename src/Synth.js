@@ -11,11 +11,23 @@ class Synth extends Component {
 
     this.state = {
       synthOptions: {
+        oscillator: {
+          type: "square"
+        },
         envelope : {
           attack : 0.02,
           decay : 0.20,
           sustain : 0.3,
           release : 0.3
+        },
+        modulation : {
+          type : "square"
+        } ,
+        modulationEnvelope : {
+          attack : 0.5 ,
+          decay : 0 ,
+          sustain : 1 ,
+          release : 0.5
         }
       },
     };

@@ -197,11 +197,11 @@ class Keyboard extends Component {
           </div>
           <div id="asdrContainer">
             Attack
-            <input type="range" id="attack" name="cowbell" min=".1" max="10" value={this.getAttack()} onChange={(e) => {this.setAttack(e)}} step=".1" />
+            <input type="range" id="attack" name="cowbell" min=".01" max="2" value={this.getAttack()} onChange={(e) => {this.setAttack(e)}} step=".01" />
             Sustain
-            <input type="range" id="sustain" name="cowbell" min=".1" max="10" value={this.getSustain()} onChange={(e) => {this.setSustain(e)}} step=".1" />
+            <input type="range" id="sustain" name="cowbell" min=".01" max="2" value={this.getSustain()} onChange={(e) => {this.setSustain(e)}} step=".01" />
             Release
-            <input type="range" id="release" name="cowbell" min=".1" max="10" value={this.getRelease()} onChange={(e) => {this.setRelease(e)}} step=".1" />
+            <input type="range" id="release" name="cowbell" min=".01" max="4" value={this.getRelease()} onChange={(e) => {this.setRelease(e)}} step=".01" />
           </div>
         </div>
     );

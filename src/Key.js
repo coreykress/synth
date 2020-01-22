@@ -17,7 +17,7 @@ class Key extends Component {
   }
 
   mouseDown() {
-    this.setState({keyActive: true});
+    // this.setState({keyActive: true});
     this.playNote();
   }
   mouseEnter() {
@@ -57,8 +57,8 @@ class Key extends Component {
             ref={node => this.node = node}
             onMouseDown={this.mouseDown}
             onMouseUp={this.releaseNote}
-            onMouseLeave={this.releaseNote}
-            onMouseEnter={this.mouseEnter}
+            // onMouseLeave={this.releaseNote}
+            // onMouseEnter={this.mouseEnter}
         ></div>
     );
   }

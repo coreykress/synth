@@ -7,13 +7,15 @@ class Synth extends Component {
   constructor(props) {
     super(props);
 
+    this.synth = null;
+
     this.state = {
       synthOptions: {
         envelope : {
-          attack : 0.01,
-          decay : 0.01,
-          sustain : 1,
-          release : 10.0
+          attack : 0.02,
+          decay : 0.20,
+          sustain : 0.3,
+          release : 0.3
         }
       },
     };
@@ -28,7 +30,13 @@ class Synth extends Component {
 
   generateSynth(options) {
     console.log(options);
-    return new Tone.AMSynth(options).toMaster();
+    if (this.synth) {
+      this.synth.dispose();
+    }
+
+    this.synth = new Tone.AMSynth(options).toMaster();
+
+    return this.synth;
   }
 
   render() {

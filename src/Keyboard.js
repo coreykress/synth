@@ -188,13 +188,14 @@ class Keyboard extends Component {
                onMouseLeave={this.setKeyboardInActive}
           >
             {this.buildKeyboard()}
-          </div>
-          <div id="octaveContainer">
-            <div id="octaveButtons">
-              <div className="octaveButton" id="octaveUp" onClick={this.octaveUp}>Up</div>
-              <div className="octaveButton" id="octaveDown" onClick={this.octaveDown}>Down</div>
+            <div id="octaveContainer">
+              <div id="octaveButtons">
+                <div className="octaveButton" id="octaveUp" onClick={this.octaveUp}>Up</div>
+                <div className="octaveButton" id="octaveDown" onClick={this.octaveDown}>Down</div>
+              </div>
             </div>
           </div>
+
           <div id="asdrContainer">
             <div>ATTACK</div>
             <div className="asdrSlider">

@@ -38,6 +38,7 @@ body {
 
 #whiteKeyContainer {
   display: flex;
+  flex: 1;
   max-width: 1000px;
   width: 100%;
 }
@@ -67,6 +68,7 @@ body {
   border: solid 1px #0086B3;
   border-radius: 5px;
   background-color: #fff;
+  flex: 1;
   width: 50px;
   height: 150px;
 }
@@ -89,6 +91,7 @@ body {
 }
 
 #octaveContainer {
+  padding-left: 20px;
   display: flex;
 }
 

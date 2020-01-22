@@ -23,7 +23,8 @@
 }
 
 body {
-  background-color: #0d3349;
+  background-color: #1A0A26;
+  color: #D928DB;
 }
 
 #keyboardContainer {
@@ -74,9 +75,9 @@ body {
 }
 
 .whiteKey {
-  border: solid 1px #0086B3;
+  border: solid 1px #14FAFC;
   border-radius: 5px;
-  background-color: #fff;
+  background-color: #c2feff;
   width: 50px;
   height: 150px;
 }
@@ -87,7 +88,8 @@ body {
 
 .blackKey {
   border-radius: 5px;
-  background-color: #000;
+  border: solid 1px #FF6C11;
+  background-color: #FFA56E;
   margin: 0 -1.5%;
   position: relative;
   width: 30px;

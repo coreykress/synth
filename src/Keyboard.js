@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Key from './Key';
+import OscillatorControls from './OscillatorControls';
 
 class Keyboard extends Component {
   constructor(props) {
@@ -60,12 +61,7 @@ class Keyboard extends Component {
       octaves: [],
       octaveCount: 3,
       lowOctave: 4,
-      active: false,
-      attack: this.props.synthOptions.envelope.attack,
-      sustain: this.props.synthOptions.envelope.sustain,
-      decay: this.props.synthOptions.envelope.decay,
-      release: this.props.synthOptions.envelope.release,
-      waveType: this.props.synthOptions.oscillator.type
+      active: false
     };
 
     this.setOctaves = this.setOctaves.bind(this);
@@ -74,74 +70,15 @@ class Keyboard extends Component {
     this.octaveDown = this.octaveDown.bind(this);
     this.setKeyboardActive = this.setKeyboardActive.bind(this);
     this.setKeyboardInActive = this.setKeyboardInActive.bind(this);
+    this.updateSynth = this.updateSynth.bind(this);
   }
 
-  generateSynthOptions() {
-    return {
-      oscillator: {
-        type: this.state.waveType
-      },
-      envelope: {
-        attack: this.state.attack,
-        decay: this.state.decay,
-        sustain: this.state.sustain,
-        release: this.state.release
-      }
-    }
+  generateSynthOptions(updatedOptions) {
+    return Object.assign(this.props.synthOptions, updatedOptions);
   }
 
-  updateSynth() {
-    this.props.updateSynthOptions(this.generateSynthOptions());
-  }
-
-  setAttack(value) {
-    this.setState({attack: parseFloat(value.target.value)}, () => {
-      this.updateSynth();
-    });
-  }
-
-  getAttack() {
-    return this.state.attack;
-  }
-
-  setSustain(value) {
-    this.setState({sustain: parseFloat(value.target.value)}, () => {
-      this.updateSynth();
-    });
-  }
-
-  getSustain() {
-    return this.state.sustain;
-  }
-
-  setDecay(value) {
-    this.setState({decay: parseFloat(value.target.value)}, () => {
-      this.updateSynth();
-    });
-  }
-
-  getDecay() {
-    return this.state.decay;
-  }
-
-  setRelease(value) {
-    this.setState({release: parseFloat(value.target.value)}, () => {
-      this.updateSynth();
-    });
-  }
-
-  getRelease() {
-    return this.state.release;
-  }
-
-  setWaveType(event) {
-    this.setState({waveType: event.target.value}, () => {
-      this.updateSynth();
-    });
-  }
-
-  getWaveType() {
-    return this.state.waveType;
+  updateSynth(updatedOptions) {
+    this.props.updateSynthOptions(this.generateSynthOptions(updatedOptions));
   }
 
   octaveUp () {
@@ -210,39 +147,26 @@ class Keyboard extends Component {
             </div>
           </div>
 
-          <div id="controlsContainer">
-            <div id="asdrContainer">
-              <div>ATTACK</div>
-              <div className="asdrSlider">
-                <input type="range" id="attack" className="slider" min=".01" max="2" value={this.getAttack()} onChange={(e) => {this.setAttack(e)}} step=".01" />
-                <input type="text" id="attackValue" value={this.getAttack()} readOnly/>
-              </div>
-              <div>SUSTAIN</div>
-              <div className="asdrSlider">
-                <input type="range" id="sustain" className="slider" min=".01" max="2" value={this.getSustain()} onChange={(e) => {this.setSustain(e)}} step=".01" />
-                <input type="text" id="sustainValue" value={this.getSustain()} readOnly/>
-              </div>
-              <div>DECAY</div>
-              <div className="asdrSlider">
-                <input type="range" id="decay" className="slider" min=".01" max="2" value={this.getDecay()} onChange={(e) => {this.setDecay(e)}} step=".01" />
-                <input type="text" id="decayValue" value={this.getDecay()} readOnly/>
-              </div>
-              <div>RELEASE</div>
-              <div className="asdrSlider">
-                <input type="range" id="release" className="slider" min=".01" max="4" value={this.getRelease()} onChange={(e) => {this.setRelease(e)}} step=".01" />
-                <input type="text" id="releaseValue" value={this.getRelease()} readOnly/>
-              </div>
-            </div>
 
-            <div id="waveContainer">
-              <select value={this.getWaveType()} onChange={(e) => {this.setWaveType(e)}}>
-                <option value="sine" >Sine</option>
-                <option value="square" >Square</option>
-                <option value="sawtooth" >Sawtooth</option>
-                <option value="triangle" >Triangle</option>
-              </select>
-            </div>
-          </div>
+          Carrier Oscillator
+          <OscillatorControls
+              id="carrierControls"
+              envelope={this.props.synthOptions.envelope}
+              oscillator={this.props.synthOptions.oscillator}
+              oscillatorName="oscillator"
+              envelopeName="envelope"
+              update={this.updateSynth}
+          />
+
+          Modulation Oscillator
+          <OscillatorControls
+              id="modulationControls"
+              envelope={this.props.synthOptions.modulationEnvelope}
+              oscillator={this.props.synthOptions.modulation}
+              oscillatorName="modulation"
+              envelopeName="modulationEnvelope"
+              update={this.updateSynth}
+          />
         </div>
     );
   }

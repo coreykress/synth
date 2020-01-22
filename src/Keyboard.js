@@ -63,6 +63,7 @@ class Keyboard extends Component {
       active: false,
       attack: this.props.synthOptions.envelope.attack,
       sustain: this.props.synthOptions.envelope.sustain,
+      decay: this.props.synthOptions.envelope.decay,
       release: this.props.synthOptions.envelope.release
     };
 
@@ -74,17 +75,24 @@ class Keyboard extends Component {
     this.setKeyboardInActive = this.setKeyboardInActive.bind(this);
   }
 
-  setAttack(value) {
-    console.log('old state:' + this.state.attack);
-    this.setState({attack: parseFloat(value.target.value)});
-
-    this.props.updateSynthOptions({
+  generateSynthOptions() {
+    return {
       envelope: {
         attack: this.state.attack,
-        decay: 0.01,
+        decay: this.state.decay,
         sustain: this.state.sustain,
         release: this.state.release
       }
+    }
+  }
+
+  updateSynth() {
+    this.props.updateSynthOptions(this.generateSynthOptions());
+  }
+
+  setAttack(value) {
+    this.setState({attack: parseFloat(value.target.value)}, () => {
+      this.updateSynth();
     });
   }
 
@@ -93,37 +101,29 @@ class Keyboard extends Component {
   }
 
   setSustain(value) {
-    console.log('old state:' + this.state.sustain);
-    this.setState({sustain: parseFloat(value.target.value)});
-
-    this.props.updateSynthOptions({
-      envelope : {
-        attack : this.state.attack,
-        decay : 0.01,
-        sustain : this.state.sustain,
-        release : this.state.release
-      }
+    this.setState({sustain: parseFloat(value.target.value)}, () => {
+      this.updateSynth();
     });
-
   }
 
   getSustain() {
     return this.state.sustain;
   }
 
-  setRelease(value) {
-    console.log('old state:' + this.state.release);
-    this.setState({release: parseFloat(value.target.value)});
-
-    this.props.updateSynthOptions({
-      envelope : {
-        attack : this.state.attack,
-        decay : 0.01,
-        sustain : this.state.sustain,
-        release : this.state.release,
-      }
+  setDecay(value) {
+    this.setState({decay: parseFloat(value.target.value)}, () => {
+      this.updateSynth();
     });
+  }
 
+  getDecay() {
+    return this.state.decay;
+  }
+
+  setRelease(value) {
+    this.setState({release: parseFloat(value.target.value)}, () => {
+    this.updateSynth();
+    });
   }
 
   getRelease() {
@@ -196,12 +196,26 @@ class Keyboard extends Component {
             </div>
           </div>
           <div id="asdrContainer">
-            Attack
-            <input type="range" id="attack" name="cowbell" min=".01" max="2" value={this.getAttack()} onChange={(e) => {this.setAttack(e)}} step=".01" />
-            Sustain
-            <input type="range" id="sustain" name="cowbell" min=".01" max="2" value={this.getSustain()} onChange={(e) => {this.setSustain(e)}} step=".01" />
-            Release
-            <input type="range" id="release" name="cowbell" min=".01" max="4" value={this.getRelease()} onChange={(e) => {this.setRelease(e)}} step=".01" />
+            <div>ATTACK</div>
+            <div className="asdrSlider">
+              <input type="range" id="attack" className="slider" min=".01" max="2" value={this.getAttack()} onChange={(e) => {this.setAttack(e)}} step=".01" />
+              <input type="text" id="attackValue" value={this.getAttack()} readOnly/>
+            </div>
+            <div>SUSTAIN</div>
+            <div className="asdrSlider">
+              <input type="range" id="sustain" className="slider" min=".01" max="2" value={this.getSustain()} onChange={(e) => {this.setSustain(e)}} step=".01" />
+              <input type="text" id="sustainValue" value={this.getSustain()} readOnly/>
+            </div>
+            <div>DECAY</div>
+            <div className="asdrSlider">
+              <input type="range" id="decay" className="slider" min=".01" max="2" value={this.getDecay()} onChange={(e) => {this.setDecay(e)}} step=".01" />
+              <input type="text" id="decayValue" value={this.getDecay()} readOnly/>
+            </div>
+            <div>RELEASE</div>
+            <div className="asdrSlider">
+              <input type="range" id="release" className="slider" min=".01" max="4" value={this.getRelease()} onChange={(e) => {this.setRelease(e)}} step=".01" />
+              <input type="text" id="releaseValue" value={this.getRelease()} readOnly/>
+            </div>
           </div>
         </div>
     );

@@ -31,13 +31,32 @@ body {
 }
 
 #keyboard {
+  margin: 10px;
   display: flex;
+  flex-direction: column;
 }
 
 #whiteKeyContainer {
   display: flex;
   max-width: 1000px;
   width: 100%;
+}
+
+#asdrContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.asdrSlider {
+  display: flex;
+}
+
+.slider {
+  flex: 1;
+  padding: 5px;
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .key {

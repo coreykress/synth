@@ -26,14 +26,15 @@ class Synth extends Component {
 
   updateSynthOptions(options) {
     this.setState({synthOptions: options});
+    console.log('new options: ', this.state.synthOptions);
   }
 
   generateSynth(options) {
-    console.log(options);
     if (this.synth) {
       this.synth.dispose();
     }
 
+    console.log('making new synth', options);
     this.synth = new Tone.AMSynth(options).toMaster();
 
     return this.synth;

@@ -61,6 +61,9 @@ class Keyboard extends Component {
       octaveCount: 3,
       lowOctave: 4,
       active: false,
+      attack: this.props.synthOptions.envelope.attack,
+      sustain: this.props.synthOptions.envelope.sustain,
+      release: this.props.synthOptions.envelope.release
     };
 
     this.setOctaves = this.setOctaves.bind(this);
@@ -69,6 +72,62 @@ class Keyboard extends Component {
     this.octaveDown = this.octaveDown.bind(this);
     this.setKeyboardActive = this.setKeyboardActive.bind(this);
     this.setKeyboardInActive = this.setKeyboardInActive.bind(this);
+  }
+
+  setAttack(value) {
+    console.log('old state:' + this.state.attack);
+    this.setState({attack: parseFloat(value.target.value)});
+
+    this.props.updateSynthOptions({
+      envelope: {
+        attack: this.state.attack,
+        decay: 0.01,
+        sustain: this.state.sustain,
+        release: this.state.release
+      }
+    });
+  }
+
+  getAttack() {
+    return this.state.attack;
+  }
+
+  setSustain(value) {
+    console.log('old state:' + this.state.sustain);
+    this.setState({sustain: parseFloat(value.target.value)});
+
+    this.props.updateSynthOptions({
+      envelope : {
+        attack : this.state.attack,
+        decay : 0.01,
+        sustain : this.state.sustain,
+        release : this.state.release
+      }
+    });
+
+  }
+
+  getSustain() {
+    return this.state.sustain;
+  }
+
+  setRelease(value) {
+    console.log('old state:' + this.state.release);
+    this.setState({release: parseFloat(value.target.value)});
+
+    this.props.updateSynthOptions({
+      envelope : {
+        attack : this.state.attack,
+        decay : 0.01,
+        sustain : this.state.sustain,
+        release : this.state.release,
+      }
+    });
+
+  }
+
+  getRelease() {
+    return this.state.release;
   }
 
   octaveUp () {
@@ -135,6 +194,14 @@ class Keyboard extends Component {
               <div className="octaveButton" id="octaveUp" onClick={this.octaveUp}>Up</div>
               <div className="octaveButton" id="octaveDown" onClick={this.octaveDown}>Down</div>
             </div>
+          </div>
+          <div id="asdrContainer">
+            Attack
+            <input type="range" id="attack" name="cowbell" min=".1" max="10" value={this.getAttack()} onChange={(e) => {this.setAttack(e)}} step=".1" />
+            Sustain
+            <input type="range" id="sustain" name="cowbell" min=".1" max="10" value={this.getSustain()} onChange={(e) => {this.setSustain(e)}} step=".1" />
+            Release
+            <input type="range" id="release" name="cowbell" min=".1" max="10" value={this.getRelease()} onChange={(e) => {this.setRelease(e)}} step=".1" />
           </div>
         </div>
     );
